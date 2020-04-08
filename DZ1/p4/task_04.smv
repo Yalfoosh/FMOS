@@ -1,0 +1,20 @@
+MODULE main
+VAR
+    request: boolean;
+    flag: {red, blue};
+ASSIGN
+    init(flag) := blue;
+    next(flag) :=
+        case
+            request = FALSE : blue;
+            TRUE : red;
+        esac;
+
+    -- Riješi se implicitnog nedeterminizma kod neinicijaliziranih varijabli
+    init(request) := FALSE;
+
+    -- Uvedi eksplicitni nedeterminizam za request prijelaze
+    next(request) :=
+    case
+        TRUE : {TRUE, FALSE};
+    esac;

@@ -1,0 +1,24 @@
+MODULE main
+VAR
+    request : boolean;
+    status : {ready, busy};
+    negReq : boolean;
+
+ASSIGN
+    init(request) := FALSE;
+    init(status) := busy;
+    init(negReq) := TRUE;
+
+    next(request) :=
+    case
+        (status = ready) : FALSE;
+        TRUE: TRUE;
+    esac;
+
+    next(status) :=
+    case
+        request : ready;
+        TRUE : busy;
+    esac;
+
+    next(negReq) := !request;
