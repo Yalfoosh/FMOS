@@ -7,6 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{minted}
+\usepackage{tcolorbox}
 \usepackage{tikz}
 \usepackage{xcolor}
 
@@ -14,26 +15,37 @@
 
 \definecolor{Gray}{gray}{0.85}
 
-\renewcommand{\contentsname}{Sadržaj}
-\setcounter{secnumdepth}{0}
-
-\newcommand{\code}[1]{\colorbox{blue!15}{\texttt{#1}}}
-\newcommand{\odgovor}{\subsubsection*{Odgovor}}
+\newcommand{\crnotice}[1]
+{
+    \begin{center}
+        \colorbox{red!15}{\parbox{\textwidth}{#1}}
+    \end{center}
+}
+\newcommand{\sekcija}[1]{\section{\textsc{#1}}}
+\newcommand{\dio}[1]{\sekcija{#1. dio}}
 \newcommand{\zadatak}[1]{\subsection{Zadatak #1}}
+\newcommand{\odgovor}{\subsubsection*{Odgovor}}
+\newcommand{\code}[1]{\colorbox{blue!11}{\texttt{#1}}}
+
+\renewcommand{\contentsname}{Sadržaj}
+
+\setcounter{secnumdepth}{0}
 
 \begin{document}
 \begin{titlepage}
     \centering
     \vspace*{\fill}
 
+    \huge
+    \textbf{\textsc{Formalne metode u oblikovanju sustava}} \\
+    
     \vspace*{0.5cm}
-
-    \huge\bfseries
-    Formalne metode u oblikovanju sustava \\
-    \vspace*{0.5cm}
-    \large 1. domaća zadaća - NuSMV
+    
+    \large
+    \textsc{1. domaća zadaća - NuSMV} \\
 
     \vspace*{\fill}
+    \textsc{Zagreb, travanj 2020.}
 \end{titlepage}
 
 \tableofcontents
@@ -41,31 +53,35 @@
 
 
 
-\section{Izjava}
+\sekcija{Izjava}
 
 Zadaci priloženi uz ovu domaću zadaću pripadaju njihovim vlasnicima te služe isključivo u edukacijske svrhe. Bilo koja promjena originala je isključivo radi estetske i funkcionalne prirode i ne mijenja smisao informacije. Također, takve promjene ne primijenjuje nikakvu drukčiju licencu niti se smatraju intelektualnim vlasništvom uređivača.
 \newline
 
-Odgovori na pitanja su, doduše, licencirani licencom iz repozitorija:
+Uz ovu datoteku obično dolaze i primjerci kôda, koji su zaštićeni licencom:
 
-\begin{minted}{text}
-Copyright 2020 Miljenko Šuflaj
+\crnotice
+{
+    Copyright 2020 Miljenko Šuflaj
+    \newline
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    \newline
 
-       http://www.apache.org/licenses/LICENSE-2.0
+        \quad
+        http://www.apache.org/licenses/LICENSE-2.0
+        \newline
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-\end{minted}
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+}
 
-
-\section{Priprema}
+\sekcija{Priprema}
 
 Potrebno je instalirati NuSMV prema uputama predmeta u repozitoriju, kao i primjere u direktoriju vježbe. Svi primjeri nalazit će se u datoteci \code{primjeri} u korijenu direktorija repozitorija vježbe. Direktorij NuSMV treba postaviti u korijen repozitorija - nakon toga će se izvršni program NuSMV nalaziti na \code{NuSMV/bin/NuSMV.exe}. Svi primjeri bit će pokrenuti iz direktorija \code{DZ1}, što znači da se naredbe odnose na scenarij kada smo pozicionirani u tom direktoriju.
 
@@ -73,7 +89,7 @@ Potrebno je instalirati NuSMV prema uputama predmeta u repozitoriju, kao i primj
 
 
 
-\section{1. dio}
+\dio{1}
 
 \zadatak{1.1}
 Prouči primjer \code{mutex\_1ex.smv}.
@@ -144,7 +160,7 @@ Nepoželjno ponašanje je u ovom slučaju istovremeno nalaženje u kritičnom od
 
 \zadatak{1.3}
 
-Utvrdi pomoću sustava NuSMV je li ispunjeno navedeno obilježje. Objasni rezultat na temelju koda primjera (ne na temelju ispisa traga).
+Utvrdi pomoću sustava NuSMV je li ispunjeno navedeno obilježje. Objasni rezultat na temelju kôda primjera (ne na temelju ispisa traga).
 
 \odgovor
 
@@ -159,7 +175,7 @@ Pokrenimo dvije naredbe:
 Pokretanjem prve naredbe vidimo da specifikacija nije ispravna, dok pokretanjem druge utvrđujemo da je ona ispravna.
 \newline
 
-Ako analiziramo kod, vidimo da kod \textbf{prve} specifikacije želimo da postoji (barem jedan) put na kojem se događa da su istovremeno oba procesa u kritičnom odsječku. Međusobno isključivanje podrazumijeva da se ovo nikad ne događa, tj. da je u kritičnom odsječku uvijek \textbf{isključivo} jedan proces. Kod \textbf{druge} specifikacije želimo da ne postoji ni jedno stanje u kojem se može dogoditi da su oba procesa u kritičnom odsječku. Ovo ujedno i \textbf{zadovoljava} obilježje sigurnosti.
+Ako analiziramo kôd, vidimo da kôd \textbf{prve} specifikacije želimo da postoji (barem jedan) put na kojem se događa da su istovremeno oba procesa u kritičnom odsječku. Međusobno isključivanje podrazumijeva da se ovo nikad ne događa, tj. da je u kritičnom odsječku uvijek \textbf{isključivo} jedan proces. Kod \textbf{druge} specifikacije želimo da ne postoji ni jedno stanje u kojem se može dogoditi da su oba procesa u kritičnom odsječku. Ovo ujedno i \textbf{zadovoljava} obilježje sigurnosti.
 \pagebreak  % Čišće je
 
 
@@ -177,8 +193,8 @@ Specifikaciju napiši za oba procesa.
 Specifikacija glasi:
 
 \begin{minted}{text}
-CTLSPEC AG(proc0.state = entering -> AF(proc0.state = critical))
-CTLSPEC AG(proc1.state = entering -> AF(proc1.state = critical))
+CTLSPEC AG (proc0.state = entering -> AF (proc0.state = critical))
+CTLSPEC AG (proc1.state = entering -> AF (proc1.state = critical))
 \end{minted}
 
 
@@ -204,7 +220,7 @@ U \code{mutex\_1ex.smv} dodaj ograničenje pravednosti (engl. \textit{fairness})
 
 \odgovor
 
-U modul \code{user} treba dodati liniju:
+U \code{mutex\_1ex.smv} treba dodati liniju:
 
 \begin{minted}{text}
 JUSTICE running
@@ -228,7 +244,7 @@ U \code{mutex\_1ex.smv} još dodaj ograničenje pravednosti: svaka instanca proc
 
 \odgovor
 
-U modul \code{user} treba osim prethodnog ograničenja za \code{running} dodati:
+U \code{mutex\_1ex.smv} treba osim prethodnog ograničenja za \code{running} dodati:
 
 \begin{minted}{text}
 JUSTICE !(state = critical)
@@ -244,7 +260,7 @@ U \code{mutex\_1ex.smv} dodaj još jedno ograničenje pravednosti: svaka instanc
 
 \odgovor
 
-U modul \code{user} treba još dodati:
+U \code{mutex\_1ex.smv} treba još dodati:
 
 \begin{minted}{text}
 JUSTICE !(state = noncritical)
@@ -268,8 +284,8 @@ sve dok proc1 nije prošao kroz svoj kritični odsječak.
 \odgovor
 
 \begin{minted}{text}
-CTLSPEC AG(proc0.state = exiting ->
-           A[proc1.state = exiting U !(proc0.state = critical)])
+CTLSPEC AG (proc0.state = exiting ->
+            A[proc1.state = exiting U !(proc0.state = critical)])
 \end{minted}
 
 
@@ -287,7 +303,7 @@ Riješili smo probleme beskonačnog boravka u (ne)kritičnim odsječcima, međut
 
 
 
-\section{2. dio}
+\dio{2}
 
 \zadatak{2.1}
 
@@ -357,7 +373,7 @@ Potrebno je napisati dva oblika obilježja:
 
 \zadatak{2.3}
 
-Utvrdi da li je ispunjeno zadano obilježje. Objasni rezultat na temelju koda primjera (ne na temelju ispisa traga).
+Utvrdi da li je ispunjeno zadano obilježje. Objasni rezultat na temelju kôda primjera (ne na temelju ispisa traga).
 
 \odgovor
 
@@ -378,8 +394,8 @@ Specifikaciju napiši za oba procesa.
 Specifikacija glasi:
 
 \begin{minted}{text}
-CTLSPEC AG(proc0.state = reading -> AF(proc0.state = critical))
-CTLSPEC AG(proc1.state = reading -> AF(proc1.state = critical))
+CTLSPEC AG (proc0.state = reading -> AF(proc0.state = critical))
+CTLSPEC AG (proc1.state = reading -> AF(proc1.state = critical))
 \end{minted}
 \pagebreak  % Čišće je
 
@@ -402,7 +418,7 @@ Specificiraj i napiši u CTL notaciji taj problem i provjeri ga pomoću NuSMV su
 Specifikacija tog problema glasi:
 
 \begin{minted}{text}
-CTLSPEC EF(AG(proc0.state = reading & proc1.state = reading))
+CTLSPEC EF (AG (proc0.state = reading & proc1.state = reading))
 \end{minted}
 
 \noindent
@@ -480,8 +496,8 @@ Je li zadovoljeno obilježje životnosti (2. dio, 4. pitanje)?
 Dodajmo specifikacije
 
 \begin{minted}{text}
-CTLSPEC AG(proc0.state = testflag -> AF(proc0.state = critical))
-CTLSPEC AG(proc1.state = testflag -> AF(proc1.state = critical))
+CTLSPEC AG (proc0.state = testflag -> AF (proc0.state = critical))
+CTLSPEC AG (proc1.state = testflag -> AF (proc1.state = critical))
 \end{minted}
 
 \noindent
@@ -490,7 +506,7 @@ Nakon izvršavanja \code{NuSMV/bin/NuSMV DZ1/p2/task\_09.smv} NuSMV nam javlja d
 
 \zadatak{2.10}
 
-Dodajte sad ograničenja pravednosti kao kod zadataka 1.6, 1.8 i 1.9. Je li sad zadovoljeno obilježje životnosti?
+Dodajte sad ograničenja pravednosti kao kôd zadataka 1.6, 1.8 i 1.9. Je li sad zadovoljeno obilježje životnosti?
 
 \odgovor
 
@@ -503,10 +519,10 @@ Koji je problem u ovoj implementaciji međusobnog isključivanja (bez obzira na 
 
 \odgovor
 
-Problem je u sustavu testnih zastavica. Moguće je da oba procesa zapnu u iz \code{testflag1}, što znači da nikad neće doći u stanje \code{testflag}, preko kojeg bi neki proces mogao doći u kritični odsječak. Dovoljno je pokazati da se to implicira kad samo jedan od procesa bude u \code{testflag1}. Na primjer, u kod iz \code{mutex\_3ex.smv} možemo dodati liniju:
+Problem je u sustavu testnih zastavica. Moguće je da oba procesa zapnu u iz \code{testflag1}, što znači da nikad neće doći u stanje \code{testflag}, preko kojeg bi neki proces mogao doći u kritični odsječak. Dovoljno je pokazati da se to implicira kad samo jedan od procesa bude u \code{testflag1}. Na primjer, u kôd iz \code{mutex\_3ex.smv} možemo dodati liniju:
 
 \begin{minted}{text}
-CTLSPEC EF(proc0.state = testflag1 -> AG(proc1.state = testflag1))
+CTLSPEC EF (AG (proc0.state = testflag1) -> AG (proc1.state = testflag1))
 \end{minted}
 
 \noindent
@@ -589,8 +605,8 @@ Kao i inače, dodat ćemo par linija specifikacija:
 
 \begin{minted}{text}
 CTLSPEC AG !(proc0.state = critical & proc1.state = critical)
-CTLSPEC AG(proc0.state = testflag -> AF(proc0.state = critical))
-CTLSPEC AG(proc1.state = testflag -> AF(proc1.state = critical))
+CTLSPEC AG (proc0.state = testflag -> AF (proc0.state = critical))
+CTLSPEC AG (proc1.state = testflag -> AF (proc1.state = critical))
 \end{minted}
 
 \noindent
@@ -688,8 +704,8 @@ Specificiraj i napiši u CTL notaciji obilježje životnosti. Provjeri ga pomoć
 Traženi izrazi su:
 
 \begin{minted}{text}
-CTLSPEC AG(proc0.state = trying -> AF(proc0.state = critical))
-CTLSPEC AG(proc1.state = trying -> AF(proc1.state = critical))
+CTLSPEC AG (proc0.state = trying -> AF(proc0.state = critical))
+CTLSPEC AG (proc1.state = trying -> AF(proc1.state = critical))
 \end{minted}
 
 \noindent
@@ -697,7 +713,7 @@ Nakon pokretanja \code{NuSMV/bin/NuSMV DZ1/p2/task\_17.smv}, NuSMV nam kaže da 
 \pagebreak
 
 
-\section{3. dio}
+\dio{3}
 
 Prouči potpoglavlja 3.1, 3.2, 3.5 i 3.7 iz NuSMV priručnika \code{NuSMV 2.6 User Manual}. Nakon toga riješi sljedeće zadatke:
 
@@ -802,7 +818,7 @@ Provjeri drugu po redu CTL specifikaciju (redni broj 1). Je li ona istinita ili 
 Slično kao i prije, možemo provjeriti drugu po redu specifikaciju onosom naredbe \code{check\_ctlspec -n 1}. NuSMV nam je vratio rezultat da je specifikacija istinita. Provjeravala se specifikacija
 
 \begin{minted}{text}
-CTLSPEC AG (proc0.state = entering -> AF proc0.state = critical)
+CTLSPEC AG (proc0.state = entering -> AF (proc0.state = critical))
 \end{minted}
 
 \noindent
@@ -815,7 +831,7 @@ Sada ukloni obilježja pravednosti iz datoteke \code{mutex\_1ex\_int.smv}, ponov
 
 \odgovor
 
-Kako ne bi izmijenjivali sadržaj direktorija \code{primjeri}, uređeni kod smjestili smo u datoteku \code{DZ1/p3/task\_08.smv}. Nakon pokretanja \code{check\_ctlspec -n 1} druga po redu CTL specifikacija pada, što znači da obilježje životnosti više nije zadovoljeno.
+Kako ne bi izmijenjivali sadržaj direktorija \code{primjeri}, uređeni kôd smjestili smo u datoteku \code{DZ1/p3/task\_08.smv}. Nakon pokretanja \code{check\_ctlspec -n 1} druga po redu CTL specifikacija pada, što znači da obilježje životnosti više nije zadovoljeno.
 
 
 \zadatak{3.9}
@@ -860,7 +876,7 @@ Vidimo da su rezultati isti, pa stoga zaključujemo da ograničenja pravednosti 
 %--------------------------------------------------------
 
 
-\section{4. dio}
+\dio{4}
 
 \zadatak{4.1}
 
@@ -967,7 +983,7 @@ Izjava se može preoblikovati u: \newline
 \code{Nemoguće je stići do cilja dok se ne zađe na nesiguran put}. Tada je to lagano opisati specifikacijom:
 
 \begin{minted}{text}
-CTLSPEC A[!goal U !safe_state]
+CTLSPEC A [!goal U !safe_state]
 \end{minted}
 
 

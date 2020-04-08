@@ -16,7 +16,7 @@ MODULE main
 VAR
 	proc0 : process user(proc1.flag);
 	proc1 : process user(proc0.flag);
-CTLSPEC EF(proc0.state = testflag1 -> AG(proc1.state = testflag1))
+CTLSPEC EF(AG(proc0.state = testflag1) -> AG(proc1.state = testflag1))
 
 MODULE user(oflag)
 VAR
